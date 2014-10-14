@@ -17,50 +17,28 @@ import com.room8.game.screens.LoadingScreen;
 
 public class ScreenManagerTest {
 	
-	AssetManager m_assetManager;
-	SpriteBatch m_spriteBatch;
 	ScreenManager m_screenManager;
-	LoadingScreen m_loadingScreen;
 	GamePlayScreen[] m_gameplayScreen;
+	
+	LoadingScreen m_loadingScreen;
+	GamePlayScreen m_gameplay1;
+	GamePlayScreen m_gameplay2;
 
 	@Before
 	public void setupScreenManager()
 	{
 		m_screenManager = new ScreenManager();
+		
 		m_loadingScreen = mock(LoadingScreen.class);
-		when(m_loadingScreen.render
-		
-		m_gameplayScreen = new GamePlayScreen[10];
-		for(GamePlayScreen screen : m_gameplayScreen) {
-			screen = new GamePlayScreen();
-			screen.assetManager = m_assetManager;
-			screen.spriteBatch = m_spriteBatch;
-			screen.load();
-		}
-		
-		Gdx.gl.glClearColor(1, 0, 0, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		m_gameplay1 = mock(GamePlayScreen.class);
+		m_gameplay2 = mock(GamePlayScreen.class);
 	}
 	
 	@After
 	public void endSpriteBatch()
 	{
-		m_spriteBatch.end();
 	}
 	
-	@Test
-	public void screenManagerRendersLoadingScreen() {
-		m_screenManager.pushPreloadedScreen(m_loadingScreen);
-		m_screenManager.render(10);
-		assertTrue(m_spriteBatch.maxSpritesInBatch > 0);
-	}
-	
-	@Test
-	public void screenManagerRendersEmpty() {
-		m_screenManager.render(10);
-		assertTrue(m_spriteBatch.maxSpritesInBatch == 0);
-	}
-
 	@Test
 	public void testUpdate() {
 		fail("Not yet implemented");
@@ -68,7 +46,11 @@ public class ScreenManagerTest {
 
 	@Test
 	public void testPop() {
-		fail("Not yet implemented");
+		m_screenManager.pushPreloadedScreen(m_gameplay1);
+		m_screenManager.pushPreloadedScreen(m_gameplay2);
+		m_screenManager.pop();
+		m_screenManager.update(0);
+		verify(m_gameplay2, never()).update(0);
 	}
 
 	@Test

@@ -51,11 +51,6 @@ public class ScreenManager {
 		m_loadAndAddThread.start();
 	}
 
-	public void loadScreensAndAdd(FlameScreen[] screens)
-	{
-		//TODO
-	}
-
 	public void preloadScreen(FlameScreen screen) {
 		m_preloadScreens.PreloadScreens.add(screen);
 		m_preloadingThread.start();
@@ -71,11 +66,15 @@ public class ScreenManager {
 			m_screens.remove(m_screens.size()-1);
 		}
 	}
+	
+	public synchronized void unsafePop() {
+		m_screens.remove(m_screens.size()-1);
+	}
 
 	public void pushPreloadedScreen(FlameScreen screen) {
 		while(m_screens.size() > 0 && m_screens.get(m_screens.size()-1).getClass().equals(LoadingScreen.class))
 		{
-			m_screens.remove(m_screens.size()-1);
+			unsafePop();
 		}
 		m_screens.add(screen);
 	}
