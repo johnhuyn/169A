@@ -5,6 +5,7 @@ import java.util.Arrays;
 
 import com.room8.flameengine.Thread.LoadAndAdd;
 import com.room8.flameengine.Thread.PreloadScreen;
+import com.room8.game.screens.LoadingScreen;
 
 public class ScreenManager {
 
@@ -72,11 +73,10 @@ public class ScreenManager {
 	}
 
 	public void pushPreloadedScreen(FlameScreen screen) {
+		while(m_screens.size() > 0 && m_screens.get(m_screens.size()-1).getClass().equals(LoadingScreen.class))
+		{
+			m_screens.remove(m_screens.size()-1);
+		}
 		m_screens.add(screen);
-	}
-
-	private FlameScreen getCurrentScreen()
-	{
-		return m_screens.get(m_screens.size()-1);
 	}
 }

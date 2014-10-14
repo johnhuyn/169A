@@ -2,8 +2,8 @@ package com.room8.flameengine;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.room8.screens.GamePlayScreen;
-import com.room8.screens.LoadingScreen;
+import com.room8.game.screens.GamePlayScreen;
+import com.room8.game.screens.LoadingScreen;
 
 public class Room8Game extends ApplicationAdapter {
 	

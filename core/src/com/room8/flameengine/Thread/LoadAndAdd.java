@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.room8.flameengine.Flame;
 import com.room8.flameengine.FlameScreen;
-import com.room8.screens.LoadingScreen;
+import com.room8.game.screens.LoadingScreen;
 
 public class LoadAndAdd implements Runnable {
 	

@@ -1,4 +1,4 @@
-package com.room8.screens;
+package com.room8.game.screens;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.room8.flameengine.Flame;
