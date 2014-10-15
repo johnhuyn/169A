@@ -61,3 +61,30 @@ build/
 
 ## OS Specific
 .DS_Store
+
+# Eclipse Plug-In Settings #
+############################
+.pmd
+
+# Maven Generated #
+###################
+pom.xml.versionsBackup
+
+# Mac Generated #
+#################
+.DS_Store
+
+# Binary Folders #
+#################
+bin
+*/bin/
+target/
+*/target/
+
+# Logs and databases #
+######################
+*.log
+logs/
+*/logs/
+#*.sql
+#*.sqlite
