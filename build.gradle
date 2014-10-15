@@ -1,6 +1,7 @@
 buildscript {
     repositories {
         mavenCentral()
+		jcenter()
     }
     dependencies {
         classpath 'de.richsource.gradle.plugins:gwt-gradle-plugin:0.5'
