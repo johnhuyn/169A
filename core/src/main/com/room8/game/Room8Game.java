@@ -1,4 +1,4 @@
-package com.room8.game;
+package main.com.room8.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -24,4 +24,8 @@ public class Room8Game extends ApplicationAdapter {
 		batch.draw(img, 0, 0);
 		batch.end();
 	}
+
+    public boolean returnTrue() {
+        return true;
+    }
 }
