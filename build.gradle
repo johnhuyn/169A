@@ -110,6 +110,7 @@ project(":core") {
         compile "com.badlogicgames.ashley:ashley:$ashleyVersion"
         compile "com.badlogicgames.gdx:gdx-ai:$aiVersion"
         testCompile "junit:junit:+"
+        testCompile "org.mockito:mockito-core:1.+"
     }
 }
 
