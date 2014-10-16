@@ -12,10 +12,6 @@ android {
         }
 
         instrumentTest.setRoot('tests')
-        
-        packagingOptions {
-        	exclude 'LICENSE.txt'
-        }
     }
 }
 

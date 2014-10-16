@@ -4,32 +4,7 @@ sourceCompatibility = 1.6
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
 sourceSets.main.java.srcDirs = [ "src/" ]
-sourceSets.main.java.srcDirs = [ "junittest/" ]
-
-repositories {
-   jcenter()
- }
-
-dependencies {
-    compile "com.badlogicgames.gdx:gdx:$gdxVersion"
-    compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
-
-    compile 'junit:junit:4.+'
-    compile "org.mockito:mockito-all:1.9.5"
-
-    compile "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
-
-    testCompile 'junit:junit:4.+'
-    testCompile "org.mockito:mockito-all:1.9.5"
-
-    testCompile "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
-    testCompile "com.badlogicgames.gdx:gdx:$gdxVersion"
-    testCompile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
-    testCompile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
-    testCompile "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
-
-}
-
+sourceSets.test.java.srcDirs = [ "test/"]
 
 eclipse.project {
     name = appName + "-core"
