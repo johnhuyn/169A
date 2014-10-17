@@ -11,6 +11,10 @@ public class ScreenManager {
 
 	private ArrayList<FlameScreen> m_screens;
 
+    private int m_updateStart = 0;
+    private int m_renderStart = 0;
+    private boolean m_screenListDirty = false;
+
 	private LoadAndAdd m_loadAndAddScreens;
 	private Thread m_loadAndAddThread;
 	private PreloadScreen m_preloadScreens;
@@ -21,32 +25,34 @@ public class ScreenManager {
 
 		m_preloadScreens = new PreloadScreen();
 		m_loadAndAddScreens = new LoadAndAdd();
-		m_loadAndAddScreens.setLoadedScreensDestination(m_screens);
 		m_loadAndAddThread = new Thread(m_loadAndAddScreens, "LoadAndAdd Thread");
 		m_preloadingThread = new Thread(m_preloadScreens, "Preloading Thread");
 	}
 
 	public void render(float delta) {
-		for(int i = m_screens.size()-1; i >= 0; --i)
+        cleanScreenList();
+		for(int i = m_renderStart; i < m_screens.size(); ++i)
 		{
 			m_screens.get(i).render(delta);
-			if(m_screens.get(i).blockRendering())
-			{
-				break;
-			}
 		}
 	}
 
 	public void update(float delta) {
-		for(int i = m_screens.size()-1; i >= 0; --i) {
+        cleanScreenList();
+        for(int i = m_updateStart; i < m_screens.size(); ++i) {
 			m_screens.get(i).update(delta);
-			if(m_screens.get(i).blockUpdates()) {
-				break;
-			}
 		}
 	}
 
-	public void loadScreenAndAdd(FlameScreen screen) {
+    private void cleanScreenList() {
+        if(m_screenListDirty) {
+            m_renderStart = findRenderBottom();
+            m_updateStart = findUpdateBottom();
+            m_screenListDirty = false;
+        }
+    }
+
+    public void loadScreenAndAdd(FlameScreen screen) {
 		m_loadAndAddScreens.LoadAndAddScreens.add(screen);
 		m_loadAndAddThread.start();
 	}
@@ -63,12 +69,13 @@ public class ScreenManager {
 
 	public synchronized void pop() {
 		if(!m_screens.isEmpty()) {
-			m_screens.remove(m_screens.size()-1);
+            unsafePop();
 		}
 	}
 	
 	public synchronized void unsafePop() {
 		m_screens.remove(m_screens.size()-1);
+        m_screenListDirty = true;
 	}
 
 	public void pushPreloadedScreen(FlameScreen screen) {
@@ -77,5 +84,25 @@ public class ScreenManager {
 			unsafePop();
 		}
 		m_screens.add(screen);
+        m_screenListDirty = true;
 	}
+
+    private int findRenderBottom() {
+        for(int i = m_screens.size()-1; i >= 0; --i)
+        {
+            if(m_screens.get(i).blockRendering() || i == 0) {
+                return i;
+            }
+        }
+        return 0;
+    }
+
+    private int findUpdateBottom() {
+        for(int i = m_screens.size()-1; i >= 0; --i) {
+            if(m_screens.get(i).blockUpdates() || i == 0) {
+                return i;
+            }
+        }
+        return 0;
+    }
 }

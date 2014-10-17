@@ -10,8 +10,6 @@ public class LoadAndAdd implements Runnable {
 	
 	public ArrayList<FlameScreen> LoadAndAddScreens;
 	
-	private ArrayList<FlameScreen> m_loadedScreensDestination;
-	
 	public LoadAndAdd() {
 		LoadAndAddScreens = new ArrayList<FlameScreen>();
 	}
@@ -36,11 +34,7 @@ public class LoadAndAdd implements Runnable {
 		for(FlameScreen screen : LoadAndAddScreens)
 		{
 			screen.postAssetLoad();
-			while(m_loadedScreensDestination.size() > 0 && m_loadedScreensDestination.get(m_loadedScreensDestination.size()-1).getClass().equals(LoadingScreen.class))
-			{
-				Flame.INSTANCE.screenManager.pop();
-			}
-			m_loadedScreensDestination.add(screen);
+            Flame.INSTANCE.screenManager.pushPreloadedScreen(screen);
 		}
 		LoadAndAddScreens.clear();
 		
@@ -48,9 +42,5 @@ public class LoadAndAdd implements Runnable {
 		{
 			this.notify();
 		}
-	}
-
-	public void setLoadedScreensDestination(ArrayList<FlameScreen> destination) {
-		m_loadedScreensDestination = destination;
 	}
 }
